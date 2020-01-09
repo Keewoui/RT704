@@ -9,24 +9,24 @@ import docker
 
 #fonctions Files de messages
 
-def demandeCreationFile(nomFile,ip):
+def demandeCreationFile(url, nomFile):
     #x = {}
     #x["nomFile"] = nomFile
     #myParam={"donnees" : json.dumps(x)}
     myParam = {"nomFile":nomFile}
-    r = requests.post("http://{}/rabbit".format(ip), data=myParam)
+    r = requests.post("http://{}/rabbit".format(url), data=myParam)
     donnees = json.loads(r.text)
     print("File {} créée".format(donnees["nomFile"]))
 
-def demandeDepotMessageDansFile(nomFile, message, ip):
+def demandeDepotMessageDansFile(url, nomFile, message):
     myParam={"message":message}
-    r = requests.post("http://{}/rabbit/{}".format(ip, nomFile),data=myParam)
+    r = requests.post("http://{}/rabbit/{}".format(url, nomFile),data=myParam)
     donnees = json.loads(r.text)
     print("Message déposé : {} ".format(donnees["message"]))
 
-def lectureMessageDansFile(nomFile):
+def lectureMessageDansFile(url, nomFile):
     myParam={"nomFile":nomFile}
-    r = requests.get("http://localhost:5000/rabbit/{}".format(nomFile),params=myParam)
+    r = requests.get("http://{}/rabbit/{}".format(url, nomFile),params=myParam)
     donnees = json.loads(r.text)
     #print("Message lu : {} ".format(donnees["message"]))
     return (format(donnees["message"]))
@@ -66,17 +66,16 @@ def arreterConteneur(nom):
 if __name__ == '__main__':
     
     #print("oui")
-    demandeCreationFile("fileConteneur", "172.17.0.1:5000")
+    #demandeCreationFile("fileConteneur", "172.17.0.1:5000")
     #demandeDepotMessageDansFile("fileConteneur", "oui", "localhost:5000")
     #print("hello")
-    #message = lectureMessageDansFile("ToDo")
-    #while(message != "Vide"):
+    message = lectureMessageDansFile("172.17.0.1:5000", "ToDo")
+    while(message != "Vide"):
         #un replace a été mis en place car une erreur était générée par
         #le json.loads -> le json lu contenait des quotes à la place
         #des doubles quotes
-    #    tache = json.loads(message.replace("\'","\""))
+        tache = json.loads(message.replace("\'","\""))
     #    test1 = tache["id_projet"]
-    #    test2 = tache["id_tache"]
-    #    print("id_projet : {}".format(test1))
-    #    print("id_tache : {}".format(test2))
-    #    message = lectureMessageDansFile("ToDo")
+        test = tache["id_tache"]
+        demandeDepotMessageDansFile("172.17.0.1:5000", "Done", "idTache : {}".format(test))
+        message = lectureMessageDansFile("ToDo")
