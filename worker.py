@@ -53,6 +53,11 @@ def afficherConteneursEnCoursExecution():
     for conteneur in client.containers.list():
         print(conteneur.attrs['Name'])
 
+#similaire à un docker exec
+#def executerCommandeDansConteneur(nomConteneur)
+#    client = docker.from_env()
+#    container.
+
 def demarrerConteneur(nom):
     client = docker.from_env()
     conteneur = client.containers.get(nom)
@@ -66,16 +71,16 @@ def arreterConteneur(nom):
 if __name__ == '__main__':
     
     #print("oui")
-    #demandeCreationFile("fileConteneur", "172.17.0.1:5000")
+    #demandeCreationFile("172.17.0.1:5000", "fileConteneur")
     #demandeDepotMessageDansFile("fileConteneur", "oui", "localhost:5000")
-    #print("hello")
-    message = lectureMessageDansFile("172.17.0.1:5000", "ToDo")
-    while(message != "Vide"):
+    print("hello script lancé !!")
+    #message = lectureMessageDansFile("172.17.0.1:5000", "ToDo")
+    #while(message != "Vide"):
         #un replace a été mis en place car une erreur était générée par
         #le json.loads -> le json lu contenait des quotes à la place
         #des doubles quotes
-        tache = json.loads(message.replace("\'","\""))
+    #    tache = json.loads(message.replace("\'","\""))
     #    test1 = tache["id_projet"]
-        test = tache["id_tache"]
-        demandeDepotMessageDansFile("172.17.0.1:5000", "Done", "idTache : {}".format(test))
-        message = lectureMessageDansFile("172.17.0.1:5000", "ToDo")
+    #    test = tache["id_tache"]
+    #    demandeDepotMessageDansFile("172.17.0.1:5000", "Done", "idTache : {}".format(test))
+    #    message = lectureMessageDansFile("172.17.0.1:5000", "ToDo")
