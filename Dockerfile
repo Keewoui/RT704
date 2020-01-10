@@ -6,4 +6,3 @@ pip3 install requests &&\
 pip3 install simplejson &&\
 pip3 install docker
 COPY worker.py /worker.py
-CMD python3 worker.py
