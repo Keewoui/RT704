@@ -1,6 +1,7 @@
 FROM alpine:latest
-RUN apk update && apk add python3
-RUN pip3 install Flask &&\
+RUN apk update &&\
+apk add python3 &&\
+pip3 install Flask &&\
 pip3 install pika &&\
 pip3 install requests &&\
 pip3 install simplejson &&\
