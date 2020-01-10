@@ -47,5 +47,5 @@ if __name__ == '__main__':
         tache = json.loads(message.replace("\'","\""))
         test1 = tache["id_projet"]
         test = tache["id_tache"]
-        demandeDepotMessageDansFile("172.17.0.1:5000", "Done", "idProjet : {} idTache".format(test1, test))
+        demandeDepotMessageDansFile("172.17.0.1:5000", "Done", "idProjet : {} idTache : {}".format(test1, test))
         message = lectureMessageDansFile("172.17.0.1:5000", "ToDo")
