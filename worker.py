@@ -35,17 +35,17 @@ def lectureMessageDansFile(url, nomFile):
 
 if __name__ == '__main__':
     
-    #print("oui")
-    #demandeCreationFile("172.17.0.1:5000", "fileConteneur")
-    #demandeDepotMessageDansFile("fileConteneur", "oui", "localhost:5000")
-    #print("hello script lancé !!")
+    #l'ip du message initial devra peut être, être remplacée
+    #manuellement
     message = lectureMessageDansFile("172.17.0.1:5000", "ToDo")
+    
     while(message != "Vide"):
         #un replace a été mis en place car une erreur était générée par
         #le json.loads -> le json lu contenait des quotes à la place
         #des doubles quotes
         tache = json.loads(message.replace("\'","\""))
-        test1 = tache["id_projet"]
-        test = tache["id_tache"]
-        demandeDepotMessageDansFile("172.17.0.1:5000", "Done", "idProjet : {} idTache : {}".format(test1, test))
-        message = lectureMessageDansFile("172.17.0.1:5000", "ToDo")
+        numProjet = tache["id_projet"]
+        numTache = tache["id_tache"]
+        ip = tache["dataOut"][0]["ip"]
+        demandeDepotMessageDansFile(ip, "Done", "idProjet : {} idTache : {} ip : {}".format(numProjet, numTache, ip))
+        message = lectureMessageDansFile(ip, "ToDo")
