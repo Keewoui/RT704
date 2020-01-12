@@ -11,12 +11,12 @@ class NDames:
         self.size = size
         self.solutions = 0
         self.solve()
+        return(self.solutions)
 
     def solve(self):
         """Solve the n queens puzzle and print the number of solutions"""
         positions = [-1] * self.size
         self.put_queen(positions, 0)
-        return(self.solutions)
 
     def put_queen(self, positions, target_row):
         """
