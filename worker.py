@@ -3,7 +3,8 @@
 import requests
 import simplejson as json
 
-class NQueens:
+#nDames
+class NDames:
     """Generate all valid solutions for the n queens puzzle"""
     def __init__(self, size):
         # Store the puzzle (problem) size and the number of valid solutions
@@ -25,8 +26,6 @@ class NQueens:
         """
         # Base (stop) case - all N rows are occupied
         if target_row == self.size:
-            self.show_full_board(positions)
-            # self.show_short_board(positions)
             self.solutions += 1
         else:
             # For all N columns positions try to place a queen
@@ -50,15 +49,6 @@ class NQueens:
                 return False
         return True
 
-    def show_full_board(self, positions):
-        """Show the full NxN board"""
-        for row in range(self.size):
-            line = ""
-            for column in range(self.size):
-                if positions[row] == column:
-                    line += "Q "
-                else:
-                    line += ". "
 
 #fonctions Files de messages
 
@@ -104,7 +94,6 @@ if __name__ == '__main__':
         #numTache = tache["id_tache"]
         ip = tache["dataOut"][0]["ip"]
         #demandeDepotMessageDansFile(ip, "Done", "idProjet : {} idTache : {} ip : {}".format(numProjet, numTache, ip))
-        #message = lectureMessageDansFile(ip, "ToDo")
-
-        solution = NQueens(5)
+        solution = NDames(5)
         demandeDepotMessageDansFile(ip, "Done", "nbSolutions : {}".format(solution))
+        message = lectureMessageDansFile(ip, "ToDo")
