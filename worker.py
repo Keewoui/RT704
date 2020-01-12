@@ -35,7 +35,6 @@ class NDames:
                     positions[target_row] = column
                     self.put_queen(positions, target_row + 1)
 
-
     def check_place(self, positions, ocuppied_rows, column):
         """
         Check if a given position is under attack from any of
