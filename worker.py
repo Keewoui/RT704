@@ -82,25 +82,26 @@ if __name__ == '__main__':
     
     #l'ip du message initial devra être remplacée
     #manuellement
-    message = lectureMessageDansFile("172.17.0.1:5000", "ToDo")
-    
-    if (message != "Vide"):
-        while(1):
-            #un replace a été mis en place car une erreur était générée par
-            #le json.loads -> le json lu contenait des quotes à la place
-            #des doubles quotes
-            tache = json.loads(message.replace("\'","\""))
-            #on récupère l'ID du projet
-            numProjet = tache["id_projet"]
-            #on récupère l'IP pour renvoyer le résultat
-            ip = tache["dataOut"][0]["ip"]
-            #on récupère le nombre de dames à calculer
-            numDamesACalculer = tache["nbDames"]
-            #on calcule le nombre de solutions en fonction
-            #du nombre de dames
-            nbSolutions = NDames(numDamesACalculer).solutions
-            #envoi de la solution dans la file Done 
-            solution = {"id_projet" : numProjet, "nbDames" : numDamesACalculer, "nbSolutions" : nbSolutions}
-            demandeDepotMessageDansFile(ip, "Done", solution)
-            time.sleep(5)
-            message = lectureMessageDansFile(ip, "ToDo")
+    while(1):
+        message = lectureMessageDansFile("172.17.0.1:5000", "ToDo")
+        
+        if (message != "Vide"):
+            while(1):
+                #un replace a été mis en place car une erreur était générée par
+                #le json.loads -> le json lu contenait des quotes à la place
+                #des doubles quotes
+                tache = json.loads(message.replace("\'","\""))
+                #on récupère l'ID du projet
+                numProjet = tache["id_projet"]
+                #on récupère l'IP pour renvoyer le résultat
+                ip = tache["dataOut"][0]["ip"]
+                #on récupère le nombre de dames à calculer
+                numDamesACalculer = tache["nbDames"]
+                #on calcule le nombre de solutions en fonction
+                #du nombre de dames
+                nbSolutions = NDames(numDamesACalculer).solutions
+                #envoi de la solution dans la file Done 
+                solution = {"id_projet" : numProjet, "nbDames" : numDamesACalculer, "nbSolutions" : nbSolutions}
+                demandeDepotMessageDansFile(ip, "Done", solution)
+                time.sleep(5)
+                message = lectureMessageDansFile(ip, "ToDo")
