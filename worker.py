@@ -103,4 +103,4 @@ if __name__ == '__main__':
             #envoi de la solution dans la file Done 
             solution = {"id_projet" : numProjet, "nbDames" : numDamesACalculer, "nbSolutions" : nbSolutions}
             demandeDepotMessageDansFile(ip, "Done", solution)
-            time.sleep(5)
+        time.sleep(5)
