@@ -101,6 +101,6 @@ if __name__ == '__main__':
             #du nombre de dames
             nbSolutions = NDames(numDamesACalculer).solutions
             #envoi de la solution dans la file Done 
-            solution = {"id_projet" : numProjet, "nbDames" : numDamesACalculer, "nbSolutions" : nbSolutions}
+            solution = json.dumps({"id_projet" : numProjet, "nbDames" : numDamesACalculer, "nbSolutions" : nbSolutions})
             demandeDepotMessageDansFile(ip, "Done", solution)
         time.sleep(5)
