@@ -22,7 +22,6 @@ class NDames:
 
     def put_queen(self, positions, target_row):
 
-        # Base (stop) case - all N rows are occupied
         if target_row == self.size:
             self.solutions += 1
         else:
