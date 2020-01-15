@@ -49,7 +49,7 @@ class NDames:
 
 def demandeDepotMessageDansFile(ip, nomFile, message):
     myParam={"message":message}
-    r = requests.post("http://{}/rabbit/{}".format(url, nomFile),data=myParam)
+    r = requests.post("http://{}/rabbit/{}".format(ip, nomFile),data=myParam)
     donnees = json.loads(r.text)
 
 def lectureMessageDansFile(ip, nomFile):
