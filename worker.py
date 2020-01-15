@@ -6,29 +6,27 @@ import simplejson as json
 
 #nDames
 class NDames:
-    """Generate all valid solutions for the n queens puzzle"""
+    #generation des valeurs possibles pour les n dames
     def __init__(self, size):
-        # Store the puzzle (problem) size and the number of valid solutions
+        #la taille du plateau ainsi que
+        #le nombre de solutions valides
+        #sont stockés
         self.size = size
         self.solutions = 0
         self.solve()
 
     def solve(self):
-        """Solve the n queens puzzle and print the number of solutions"""
+        #résolution du problème des n dames
         positions = [-1] * self.size
         self.put_queen(positions, 0)
 
     def put_queen(self, positions, target_row):
-        """
-        Try to place a queen on target_row by checking all N possible cases.
-        If a valid place is found the function calls itself trying to place a queen
-        on the next row until all N queens are placed on the NxN board.
-        """
+
         # Base (stop) case - all N rows are occupied
         if target_row == self.size:
             self.solutions += 1
         else:
-            # For all N columns positions try to place a queen
+            #pour toutes les n colonnes on essaie de placer une dames
             for column in range(self.size):
                 # Reject all invalid positions
                 if self.check_place(positions, target_row, column):
@@ -36,10 +34,8 @@ class NDames:
                     self.put_queen(positions, target_row + 1)
 
     def check_place(self, positions, ocuppied_rows, column):
-        """
-        Check if a given position is under attack from any of
-        the previously placed queens (check column and diagonal positions)
-        """
+        #on vérifie si on peut placer une dame sur la position donnée
+        #en regardant notamment les colonnes ainsi que les diagonales
         for i in range(ocuppied_rows):
             if positions[i] == column or \
                 positions[i] - i == column - ocuppied_rows or \
@@ -51,32 +47,16 @@ class NDames:
 
 #fonctions Files de messages
 
-def demandeCreationFile(url, nomFile):
-    #x = {}
-    #x["nomFile"] = nomFile
-    #myParam={"donnees" : json.dumps(x)}
-    myParam = {"nomFile":nomFile}
-    r = requests.post("http://{}/rabbit".format(url), data=myParam)
-    donnees = json.loads(r.text)
-    print("File {} créée".format(donnees["nomFile"]))
-
-def demandeDepotMessageDansFile(url, nomFile, message):
+def demandeDepotMessageDansFile(ip, nomFile, message):
     myParam={"message":message}
     r = requests.post("http://{}/rabbit/{}".format(url, nomFile),data=myParam)
     donnees = json.loads(r.text)
-    print("Message déposé : {} ".format(donnees["message"]))
 
-def lectureMessageDansFile(url, nomFile):
+def lectureMessageDansFile(ip, nomFile):
     myParam={"nomFile":nomFile}
-    r = requests.get("http://{}/rabbit/{}".format(url, nomFile),params=myParam)
+    r = requests.get("http://{}/rabbit/{}".format(ip, nomFile),params=myParam)
     donnees = json.loads(r.text)
-    #print("Message lu : {} ".format(donnees["message"]))
     return (format(donnees["message"]))
-
-
-    client = docker.from_env()
-    conteneur = client.containers.get(nom)
-    conteneur.stop()
 
 if __name__ == '__main__':
     
